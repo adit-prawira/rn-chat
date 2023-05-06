@@ -1,3 +1,14 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@screens": ["src/screens/index"],
+      "@navigators": ["src/navigators/ubdex"],
+      "@socket-io": ["src/socket-io/index"],
+      "@theme": ["src/theme/index"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
 }

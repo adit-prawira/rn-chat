@@ -33,7 +33,9 @@ export class MessagesGateway {
 
   @SubscribeMessage(MessageEvent.FIND_MESSAGES)
   findMessages() {
-    return this.messagesService.findAll();
+    const messages = this.messagesService.findAll();
+    console.info('called', messages);
+    return messages;
   }
 
   @SubscribeMessage(MessageEvent.JOIN_ROOM)

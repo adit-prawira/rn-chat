@@ -29,6 +29,6 @@ export class MessagesService {
   }
 
   findAll() {
-    return;
+    return this.messages;
   }
 }
