@@ -10,6 +10,7 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { MessageEvent, EmitEvent } from './enums';
 import { Server, Socket } from 'socket.io';
 import { Message } from './entities/message.entity';
+import { Session } from './types';
 
 @WebSocketGateway({
   cors: {
@@ -25,16 +26,15 @@ export class MessagesGateway {
   @SubscribeMessage(MessageEvent.CREATE_MESSAGE)
   async createMessage(
     @MessageBody() createMessageDto: CreateMessageDto,
-  ): Promise<Message> {
-    const message = await this.messagesService.create(createMessageDto);
-    this.server.emit(EmitEvent.MESSAGE, message);
-    return message;
+  ): Promise<Message[]> {
+    const messages = await this.messagesService.create(createMessageDto);
+    this.server.emit(EmitEvent.MESSAGE, messages);
+    return messages;
   }
 
   @SubscribeMessage(MessageEvent.FIND_MESSAGES)
-  findMessages() {
-    const messages = this.messagesService.findAll();
-    console.info('called', messages);
+  async findMessages(): Promise<Message[]> {
+    const messages = await this.messagesService.findAll();
     return messages;
   }
 
@@ -42,16 +42,23 @@ export class MessagesGateway {
   async joinRoom(
     @MessageBody('name') name: string,
     @ConnectedSocket() client: Socket,
-  ): Promise<string[]> {
+  ): Promise<Session> {
     return this.messagesService.join(name, client.id);
+  }
+
+  @SubscribeMessage(MessageEvent.LEAVE_ROOM)
+  async leaveRoom(@MessageBody('clientId') clientId: string): Promise<string> {
+    await this.messagesService.leave(clientId);
+    return 'success';
   }
 
   @SubscribeMessage(MessageEvent.TYPING)
   async typing(
     @MessageBody('isTyping') isTyping: boolean,
+    @MessageBody('clientId') clientId: string,
     @ConnectedSocket() client: Socket,
   ) {
-    const name = await this.messagesService.getClientName(client.id);
+    const name = await this.messagesService.getClientName(clientId);
     client.broadcast.emit(EmitEvent.TYPING, {
       name,
       isTyping,

@@ -21,7 +21,16 @@ module.exports = {
           '@navigators': './src/navigators',
           '@socket-io': './src/socket-io',
           '@theme': './src/theme',
+          '@enums': './src/enums',
+          '@types': './src/types',
+          '@atoms': './src/atoms',
         },
+      },
+    ],
+    [
+      'react-native-reanimated/plugin',
+      {
+        relativeSourceLocation: true,
       },
     ],
   ],

@@ -1,3 +1,5 @@
-import { Message } from '../entities/message.entity';
-
-export class CreateMessageDto extends Message {}
+export class CreateMessageDto {
+  clientId: string;
+  name: string;
+  text: string;
+}

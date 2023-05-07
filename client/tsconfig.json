@@ -2,12 +2,16 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "isolatedModules": false,
     "paths": {
       "*": ["src/*"],
       "@screens": ["src/screens/index"],
-      "@navigators": ["src/navigators/ubdex"],
+      "@navigators": ["src/navigators/index"],
       "@socket-io": ["src/socket-io/index"],
-      "@theme": ["src/theme/index"]
+      "@theme": ["src/theme/index"],
+      "@enums": ["src/enums/index"],
+      "@types": ["src/types/index"],
+      "@atoms": ["src/atoms/index"]
     }
   },
   "exclude": ["node_modules", "dist"]

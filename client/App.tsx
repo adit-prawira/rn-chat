@@ -5,18 +5,20 @@
  * @format
  */
 
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {ThemeProvider} from './src/theme';
-import {RootNavigator} from './src/navigators';
+import {Provider as JotaiProvider} from 'jotai';
+import {ThemeProvider, NavigationProvider} from '@theme';
+import {RootNavigator} from '@navigators';
 
 function App(): JSX.Element {
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
-    </ThemeProvider>
+    <JotaiProvider>
+      <ThemeProvider>
+        <NavigationProvider>
+          <RootNavigator />
+        </NavigationProvider>
+      </ThemeProvider>
+    </JotaiProvider>
   );
 }
 
