@@ -11,3 +11,8 @@ export enum EmitEvent {
   MESSAGE = 'message',
   TYPING = 'typing',
 }
+
+export enum MessageType {
+  CHAT = 'chat',
+  EVENT = 'event',
+}

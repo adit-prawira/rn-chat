@@ -43,12 +43,17 @@ export class MessagesGateway {
     @MessageBody('name') name: string,
     @ConnectedSocket() client: Socket,
   ): Promise<Session> {
-    return this.messagesService.join(name, client.id);
+    const session = await this.messagesService.join(name, client.id);
+    const messages = await this.messagesService.findAll();
+    this.server.emit(EmitEvent.MESSAGE, messages);
+    return session;
   }
 
   @SubscribeMessage(MessageEvent.LEAVE_ROOM)
   async leaveRoom(@MessageBody('clientId') clientId: string): Promise<string> {
     await this.messagesService.leave(clientId);
+    const messages = await this.messagesService.findAll();
+    this.server.emit(EmitEvent.MESSAGE, messages);
     return 'success';
   }
 
