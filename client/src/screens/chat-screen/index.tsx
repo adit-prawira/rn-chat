@@ -36,7 +36,7 @@ export function ChatScreen(): JSX.Element {
   const [chats, setChats] = useState<TMessage[]>([]);
   const [message, setMessage] = useState<string>('');
   const theme = useTheme();
-  const {session, leaveSession} = useSession();
+  const {session, leave} = useSession();
   const textAreaColor = useContrastText(theme.colors.dark[600]);
   const [dimension, setDimension] = useState<TDimension>({width: 0, height: 0});
 
@@ -86,7 +86,7 @@ export function ChatScreen(): JSX.Element {
   }
 
   function handleLeaveRoom(): void {
-    leaveSession();
+    leave();
   }
 
   function handleScrollToEnd(_w: number, _h: number): void {

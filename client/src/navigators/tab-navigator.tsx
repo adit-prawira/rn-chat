@@ -29,9 +29,8 @@ export function TabNavigator(): JSX.Element {
           tabBarIcon({focused}) {
             const isCustomerScreen = route.name === 'Chat';
             const iconColor: ColorValue = focused ? '#4aa171' : 'gray';
-            if (isCustomerScreen) {
+            if (isCustomerScreen)
               return <Icon name="chat" color={iconColor} size={25} />;
-            }
             return <Icon name="phone" color={iconColor} size={25} />;
           },
         };

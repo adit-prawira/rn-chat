@@ -21,9 +21,9 @@ type TDimension = {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export function JoinSessionScreen(): JSX.Element {
+export function JoinScreen(): JSX.Element {
   const theme = useTheme();
-  const {joinSession} = useSession();
+  const {join} = useSession();
   const [name, setName] = useState<string>('');
   const [dimension, setDimension] = useState<TDimension>({width: 0, height: 0});
   const headingColor = useContrastText(theme.colors.dark[200]);
@@ -39,7 +39,7 @@ export function JoinSessionScreen(): JSX.Element {
   }
 
   function handleJoinRoom(): void {
-    joinSession(name);
+    join(name);
     setName('');
   }
   return (

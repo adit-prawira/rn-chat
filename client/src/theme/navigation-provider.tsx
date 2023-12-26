@@ -2,7 +2,7 @@ import React from 'react';
 
 import {NavigationContainer, DarkTheme} from '@react-navigation/native';
 export interface NavigationProviderProps {
-  children: React.ReactNode;
+  readonly children: React.ReactNode;
 }
 export function NavigationProvider({
   children,

@@ -20,13 +20,13 @@ export const SessionAtom = atom<TSessionStore>({
 
 export type TSessionReturnValue = {
   session: TSessionStore;
-  joinSession: (name: string) => void;
-  leaveSession: () => void;
+  join: (name: string) => void;
+  leave: () => void;
 };
 
 export function useSession(): TSessionReturnValue {
   const [session, setSession] = useAtom(SessionAtom);
-  function joinSession(name: string): void {
+  function join(name: string): void {
     webSocket.emit(
       MessageEvent.JOIN_ROOM,
       {name},
@@ -36,7 +36,7 @@ export function useSession(): TSessionReturnValue {
       },
     );
   }
-  function leaveSession(): void {
+  function leave(): void {
     webSocket.emit(
       MessageEvent.LEAVE_ROOM,
       {clientId: session.clientId},
@@ -59,7 +59,7 @@ export function useSession(): TSessionReturnValue {
 
   return {
     session,
-    joinSession,
-    leaveSession,
+    join,
+    leave,
   };
 }
