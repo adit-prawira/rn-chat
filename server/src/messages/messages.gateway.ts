@@ -11,6 +11,7 @@ import { MessageEvent, EmitEvent } from './enums';
 import { Server, Socket } from 'socket.io';
 import { Message } from './entities/message.entity';
 import { Session } from './types';
+import { ColorService } from './color.service';
 
 @WebSocketGateway({
   cors: {
@@ -18,10 +19,15 @@ import { Session } from './types';
   },
 })
 export class MessagesGateway {
+  private THEME_COLOR: string = '#4aa171';
+
   @WebSocketServer()
   private server: Server;
 
-  constructor(private readonly messagesService: MessagesService) {}
+  constructor(
+    private readonly messagesService: MessagesService,
+    private readonly colorService: ColorService,
+  ) {}
 
   @SubscribeMessage(MessageEvent.CREATE_MESSAGE)
   async createMessage(
@@ -43,7 +49,10 @@ export class MessagesGateway {
     @MessageBody('name') name: string,
     @ConnectedSocket() client: Socket,
   ): Promise<Session> {
-    const session = await this.messagesService.join(name, client.id);
+    const color = this.colorService.generateContrastColor(this.THEME_COLOR);
+    const session = await this.messagesService.join(name, client.id, {
+      with: { color },
+    });
     const messages = await this.messagesService.findAll();
     this.server.emit(EmitEvent.MESSAGE, messages);
     return session;

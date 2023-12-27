@@ -28,12 +28,14 @@ export function JoinScreen(): JSX.Element {
   const [dimension, setDimension] = useState<TDimension>({width: 0, height: 0});
   const headingColor = useContrastText(theme.colors.dark[200]);
   const inputColor = useContrastText(theme.colors.dark[200]);
+
   function handleLayoutChange(event: LayoutChangeEvent): void {
     setDimension({
       width: event.nativeEvent.layout.width,
       height: event.nativeEvent.layout.height,
     });
   }
+
   function handleChangeText(text: string): void {
     setName(text);
   }
@@ -42,6 +44,7 @@ export function JoinScreen(): JSX.Element {
     join(name);
     setName('');
   }
+
   return (
     <ScrollView backgroundColor={theme.colors.dark[200]} paddingTop="60%">
       <View onLayout={handleLayoutChange}>

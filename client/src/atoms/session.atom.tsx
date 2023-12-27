@@ -26,6 +26,7 @@ export type TSessionReturnValue = {
 
 export function useSession(): TSessionReturnValue {
   const [session, setSession] = useAtom(SessionAtom);
+
   function join(name: string): void {
     webSocket.emit(
       MessageEvent.JOIN_ROOM,
@@ -36,6 +37,7 @@ export function useSession(): TSessionReturnValue {
       },
     );
   }
+
   function leave(): void {
     webSocket.emit(
       MessageEvent.LEAVE_ROOM,

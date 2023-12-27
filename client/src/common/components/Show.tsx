@@ -4,6 +4,6 @@ interface ShowProps {
   readonly when: boolean;
   readonly children: React.ReactNode;
 }
-export function Show({children, when}: ShowProps): JSX.Element {
+export function Show({when, children}: ShowProps): JSX.Element {
   return when ? <>{children}</> : <></>;
 }

@@ -1,4 +1,4 @@
-import {ChatScreen} from './chat-screen';
-import {PhoneScreen} from './phone-screen';
-import {JoinScreen} from './join-session-screen';
+import {ChatScreen} from './ChatScreen';
+import {PhoneScreen} from './PhoneScreen';
+import {JoinScreen} from './JoinSessionScreen';
 export {ChatScreen, PhoneScreen, JoinScreen};

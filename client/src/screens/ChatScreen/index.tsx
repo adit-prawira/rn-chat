@@ -32,25 +32,30 @@ type TDimension = {
 };
 
 export function ChatScreen(): JSX.Element {
-  const scrollView = useRef<TScrollView>();
-  const [chats, setChats] = useState<TMessage[]>([]);
-  const [message, setMessage] = useState<string>('');
   const theme = useTheme();
   const {session, leave} = useSession();
-  const textAreaColor = useContrastText(theme.colors.dark[600]);
+
+  const scrollView = useRef<TScrollView>();
+
+  const [chats, setChats] = useState<TMessage[]>([]);
+  const [message, setMessage] = useState<string>('');
   const [dimension, setDimension] = useState<TDimension>({width: 0, height: 0});
+
+  const textAreaColor = useContrastText(theme.colors.dark[600]);
 
   const chatElements = useMemo(
     function () {
-      const toChatElement = function (chat: TMessage): JSX.Element {
-        const isChat = chat.type === MessageType.CHAT;
-        if (isChat)
-          return (
-            <ChatBox chat={chat} sessionId={session.clientId} key={chat.id} />
-          );
-        return <EventBox chat={chat} key={chat.id} />;
-      };
-      return map<TMessage, JSX.Element>(chats, toChatElement);
+      return map<TMessage, JSX.Element>(
+        chats,
+        function (chat: TMessage): JSX.Element {
+          const isChat = chat.type === MessageType.CHAT;
+          if (isChat)
+            return (
+              <ChatBox chat={chat} sessionId={session.clientId} key={chat.id} />
+            );
+          return <EventBox chat={chat} key={chat.id} />;
+        },
+      );
     },
     [chats],
   );

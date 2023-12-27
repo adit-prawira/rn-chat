@@ -6,16 +6,27 @@ import { Session } from './types';
 import { MessageType } from './enums';
 import { ColorService } from './color.service';
 
+type JoinOptions = {
+  with: {
+    color: string;
+  };
+};
+
 @Injectable()
 export class MessagesService {
-  private THEME_COLOR: string = '#4aa171';
   private clientToUser: Map<string, User> = new Map();
   private messages: Message[] = [];
 
-  constructor(private colorService: ColorService) {}
+  constructor() {}
 
-  async join(name: string, clientId: string): Promise<Session> {
-    const color = this.colorService.generateContrastColor(this.THEME_COLOR);
+  async join(
+    name: string,
+    clientId: string,
+    options: JoinOptions,
+  ): Promise<Session> {
+    const {
+      with: { color },
+    } = options;
     this.clientToUser.set(clientId, {
       name,
       color,
@@ -67,11 +78,8 @@ export class MessagesService {
     }
   }
 
-  async getClientName(clientId: string): Promise<User> {
-    return this.clientToUser.get(clientId);
-  }
+  getClientName = async (clientId: string): Promise<User> =>
+    this.clientToUser.get(clientId);
 
-  async findAll() {
-    return this.messages;
-  }
+  findAll = async () => this.messages;
 }

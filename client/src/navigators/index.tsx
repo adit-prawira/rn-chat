@@ -1,3 +1,3 @@
-import {RootNavigator} from './root-navigator';
+import {RootNavigator} from './RootNavigator';
 export {RootNavigator};
 export default RootNavigator;

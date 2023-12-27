@@ -1,9 +1,8 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {TabNavigator} from './tab-navigator';
+import {TabNavigator} from './TabNavigator';
 import {JoinScreen} from '@screens';
 import {useSession} from '@atoms';
 import isEmpty from 'lodash/isEmpty';
-import {Show} from 'components/Show';
 
 type TRootStackParam = {
   Main: undefined;
@@ -18,12 +17,11 @@ export function RootNavigator(): JSX.Element {
   return (
     <RootStack.Navigator>
       <RootStack.Group>
-        <Show when={sessionActive}>
+        {sessionActive ? (
           <RootStack.Screen name="Main" component={TabNavigator} />
-        </Show>
-        <Show when={!sessionActive}>
+        ) : (
           <RootStack.Screen name="Join Room" component={JoinScreen} />
-        </Show>
+        )}
       </RootStack.Group>
     </RootStack.Navigator>
   );

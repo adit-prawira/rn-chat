@@ -1,4 +1,4 @@
-import {ThemeProvider} from './theme-provider';
-import {NavigationProvider} from './navigation-provider';
+import {ThemeProvider} from './ThemeProvider';
+import {NavigationProvider} from './NavigationProvider';
 export {ThemeProvider, NavigationProvider};
 export default ThemeProvider;
